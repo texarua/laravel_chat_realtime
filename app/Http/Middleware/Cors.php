@@ -4,6 +4,7 @@ namespace App\Http\Middleware;
 
 use Closure;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cookie;
 
 class Cors
 {
@@ -16,8 +17,11 @@ class Cors
      */
     public function handle(Request $request, Closure $next)
     {
+        if(Cookie::get('access_token')){
+            $request->headers->set('Authorization', 'Bearer ' . Cookie::get('access_token'));
+        }
         return $next($request)
-        ->header('Access-Control-Allow-Origin', '*')
+        ->header('Access-Control-Allow-Origin', 'http://localhost:3002')
         ->header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS')
         ->header('Access-Control-Allow-Headers',' Origin, Content-Type, Accept, Authorization, X-Request-With')
         ->header('Access-Control-Allow-Credentials',' true');
