@@ -1,0 +1,14 @@
+name: Laravel
+
+on:
+  push:
+    branches: [ "develop" ]
+
+jobs:
+  laravel-tests:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: testci
+      run: echo "hello world !"
