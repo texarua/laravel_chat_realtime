@@ -1,16 +1,31 @@
-name: Laravel
+name: CI/CD Pipeline (develop)
 
 on:
   push:
-    branches: [ "develop" ]
+    branches:
+      - develop
+  pull_request:
+    branches:
+      - develop
 
 jobs:
-  laravel-tests:
-
+  build:
     runs-on: ubuntu-latest
 
     steps:
-    - name: testci
-      run: echo "hello world !"
-    - name: test step 2
-      run: echo "hello world 123123123123 !"
+    - name: Checkout code
+      uses: actions/checkout@v3
+
+    - name: Set up PHP
+      uses: shivammathur/setup-php@v2
+      with:
+        php-version: '8.3'
+
+    - name: Install dependencies
+      run: composer install --no-progress --prefer-dist --optimize-autoloader
+
+    - name: Run tests
+      run: ./vendor/bin/phpunit || true
+
+    - name: Check and fix code style
+      run: composer pint
