@@ -12,3 +12,5 @@ jobs:
     steps:
     - name: testci
       run: echo "hello world !"
+    - name: test step 2
+      run: echo "hello world 123123123123 !"
